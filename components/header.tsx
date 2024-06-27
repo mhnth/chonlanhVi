@@ -5,17 +5,18 @@ import React from 'react';
 import IAvatar from './icons/avatar';
 import ILogo from './icons/logo';
 import ISearch from './icons/search';
+import { IMenu } from './icons';
 
 export const Header: React.FC = () => {
   return (
     <header className="bg-black text-white">
-      <div className="mx-auto flex max-w-7xl items-baseline justify-between p-2 md:p-6">
-        <nav className="flex items-baseline gap-6">
-          <div className="flex items-baseline gap-1">
+      <div className="mx-auto flex max-w-7xl items-center justify-between p-2 sm:items-baseline sm:p-2">
+        <nav className="flex items-baseline">
+          <Link href={'/'} className="flex items-baseline gap-1">
             <ILogo />
-            <div className="flex text-xl">CHONLANH</div>
-          </div>
-          <div className="flex gap-3">
+            <div className="mr-6 hidden text-xl sm:block">CHONLANH</div>
+          </Link>
+          <div className="hidden gap-3 sm:flex">
             <Link href={'#'}>Bookmarks</Link>
             <Link href={'#'}>Booklists</Link>
           </div>
@@ -23,7 +24,7 @@ export const Header: React.FC = () => {
         <div className="flex">
           <form
             action=""
-            className="flex items-center gap-2 rounded-3xl bg-[#212121] px-4 py-2"
+            className="hidden items-center gap-2 rounded-3xl bg-[#212121] px-4 py-2 sm:flex"
           >
             <ISearch />
             <input
@@ -32,8 +33,11 @@ export const Header: React.FC = () => {
               placeholder="search"
             />
           </form>
-          <div className="p-2">
+          <div className="flex gap-1 p-2">
             <IAvatar />
+            <span className="cursor-pointer">
+              <IMenu className="fill-white" />
+            </span>
           </div>
         </div>
       </div>

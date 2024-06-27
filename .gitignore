@@ -13,6 +13,9 @@
 /.next/
 /out/
 
+# local route
+/app/local
+
 # production
 /build
 

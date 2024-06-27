@@ -5,9 +5,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wdth,wght@0,75..100,300..800;1,75..100,300..800&display=swap');
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,8 +13,8 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  font-family: 'Open Sans', sans-serif;
+  color: white;
+  /* font-family: 'Open Sans', sans-serif; */
   background: rgb(33, 33, 33);
 }
 
@@ -41,4 +38,13 @@ body {
   line-height: 24px;
   display: block;
   transform: translateY(2px);
+}
+
+.novel-box-bg {
+  background-image: url('../images/Noise-dark@3x.jpg');
+  background-size: 160px;
+}
+
+span {
+  display: inline-block;
 }

@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model tag {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  code   Int     @unique
+  nameVi String?
+  name   String?
+}
+
+model novel {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug         String   @unique @default("slug")
+  cover        String   @default("cover")
+  name         String   @default("nameCn")
+  author       String   @default("authorCN")
+  desc         String   @default("descCn")
+  chapTitles   String[] @default([])
+  nameVi       String   @default("nameVi")
+  authorVi     String   @default("authorVi")
+  descVi       String   @default("descVi")
+  tagsVi       String[] @default([])
+  chapTitlesVi String[] @default([])
+  parts        Json?
+  tags         String[] @default([])
+}

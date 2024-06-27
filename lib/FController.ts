@@ -1,3 +1,5 @@
+import prisma from '@/lib/prismadb';
+
 class FController {
   private prefixUrl = process.env.PREFIX_URL;
   private githubToken = process.env.GITHUB_TOKEN;
@@ -22,6 +24,40 @@ class FController {
     const data = await res.text();
 
     return data;
+  }
+
+  async getNovels() {
+    try {
+      const novels = await prisma?.novel.findMany({
+        select: {
+          nameVi: true,
+          cover: true,
+          slug: true,
+        },
+      });
+
+      return novels;
+    } catch (error) {
+      console.log('ERR fetch Novels:', error);
+
+      return null;
+    }
+  }
+
+  async getNovel(slug: string) {
+    try {
+      const novel = await prisma.novel.findUnique({
+        where: {
+          slug: slug,
+        },
+      });
+
+      return novel;
+    } catch (error) {
+      console.log('Error get Novel:', error);
+
+      return null;
+    }
   }
 }
 
