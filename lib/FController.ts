@@ -18,7 +18,6 @@ class FController {
       .replace('/master', '')
       .replace('https://github.com', 'https://api.github.com/repos')
       .replace('/blob/', '/contents/');
-    console.log('url', url);
 
     const res = await fetch(url, this.fetchOptions);
     const data = await res.text();

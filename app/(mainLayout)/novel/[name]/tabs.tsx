@@ -10,11 +10,17 @@ interface TabsProps {
   desc: string;
   parts: Prisma.JsonValue;
   chapTitles: string[];
+  slug: string;
 }
 
 type Parts = [from: number, to: number][];
 
-export const Tabs: React.FC<TabsProps> = ({ desc, chapTitles, parts }) => {
+export const Tabs: React.FC<TabsProps> = ({
+  desc,
+  chapTitles,
+  parts,
+  slug,
+}) => {
   const [tab, setTab] = useState<'about' | 'chapters'>('about');
   const [activeArc, setActiveArc] = useState<number | null>(null);
 
@@ -56,7 +62,7 @@ export const Tabs: React.FC<TabsProps> = ({ desc, chapTitles, parts }) => {
         </>
       ) : (
         <>
-          <div>
+          <div className="">
             {parts ? (
               (parts as Parts).map((p, i) => (
                 <div
@@ -64,7 +70,7 @@ export const Tabs: React.FC<TabsProps> = ({ desc, chapTitles, parts }) => {
                   className="mt-2 rounded-md bg-neutral-800 px-3 py-1"
                 >
                   <div
-                    className="flex justify-between py-2"
+                    className="flex cursor-pointer justify-between py-2"
                     onClick={() => setActiveArc(i === activeArc ? null : i)}
                   >
                     <span>{`#${i + 1} Arc ${i + 1}`}</span>
@@ -88,7 +94,9 @@ export const Tabs: React.FC<TabsProps> = ({ desc, chapTitles, parts }) => {
                           className="border-t-[0.5px] border-neutral-700 font-light text-gray-300"
                           key={index}
                         >
-                          {title}
+                          <Link href={`/novel/${slug}/${p[0] + index + 1}`}>
+                            {title}
+                          </Link>
                         </li>
                       ))}
                     </ul>

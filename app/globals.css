@@ -40,11 +40,14 @@ body {
   transform: translateY(2px);
 }
 
-.novel-box-bg {
+.novel-info-bg {
   background-image: url('../images/Noise-dark@3x.jpg');
   background-size: 160px;
 }
-
+.novel-read-bg {
+  background-image: url('../images/theme_7_bg.png');
+  background-size: 50px;
+}
 span {
   display: inline-block;
 }

@@ -1,5 +1,6 @@
 import { controller } from '@/lib/FController';
 import { Tabs } from './tabs';
+import Link from 'next/link';
 
 export default async function Page({
   params,
@@ -15,15 +16,15 @@ export default async function Page({
   if (!novel) return <div>Not Found this Novel</div>;
 
   return (
-    <main>
-      <div className="mx-auto max-w-5xl">
-        <div className="novel-box-bg flex flex-col gap-4 py-4 md:flex-row md:items-start">
+    <>
+      <div className="novel-info-bg w-full md:pt-3">
+        <div className="mx-auto flex max-w-5xl flex-col gap-4 px-3 py-4 md:flex-row md:items-start">
           <img
             src={novel.cover!}
             alt={novel.nameVi!}
-            className="mx-auto h-44 w-32 rounded-md object-cover shadow-sm shadow-slate-100"
+            className="mx-auto h-44 w-32 rounded-md object-cover shadow-sm shadow-slate-100 md:mx-0"
           />
-          <div className="flex flex-col gap-1 p-2">
+          <div className="gap-1 space-y-3 p-2">
             <h3 className="text-xl capitalize">{novel.nameVi}</h3>{' '}
             <div className="mt-2 text-sm">
               <span className="mr-2">Original:</span>
@@ -37,19 +38,24 @@ export default async function Page({
               <span className="grow rounded-md bg-gray-700 py-2 text-center">
                 Save
               </span>
-              <span className="grow rounded-md bg-gradient-to-r from-blue-400 to-blue-600 py-2 text-center">
+              <Link
+                href={`/novel/${slug}/1`}
+                className="grow rounded-md bg-gradient-to-r from-blue-400 to-blue-600 py-2 text-center"
+              >
                 Read
-              </span>
+              </Link>
             </div>
           </div>
         </div>
-
+      </div>
+      <div className="mx-auto max-w-5xl">
         <Tabs
           desc={novel.descVi}
           parts={novel.parts}
           chapTitles={novel.chapTitlesVi}
+          slug={slug}
         />
       </div>
-    </main>
+    </>
   );
 }
