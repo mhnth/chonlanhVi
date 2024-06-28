@@ -85,16 +85,19 @@ export const Tabs: React.FC<TabsProps> = ({
                   {i === activeArc && (
                     <ul
                       className={cx(
-                        'grid max-h-0 grid-cols-1 gap-4 overflow-hidden transition-all ease-in-out md:grid-cols-2',
+                        'grid max-h-0 grid-cols-1 overflow-hidden transition-all ease-in-out md:grid-cols-2',
                         i === activeArc && 'max-h-full',
                       )}
                     >
                       {chapTitles.slice(p[0], p[1] + 1).map((title, index) => (
                         <li
-                          className="border-t-[0.5px] border-neutral-700 font-light text-gray-300"
+                          className="m-2 mt-0 border-t-[0.5px] border-neutral-700 font-light text-gray-300"
                           key={index}
                         >
-                          <Link href={`/novel/${slug}/${p[0] + index + 1}`}>
+                          <Link
+                            className="mt-2 block w-full"
+                            href={`/novel/${slug}/${p[0] + index + 1}`}
+                          >
                             {title}
                           </Link>
                         </li>
