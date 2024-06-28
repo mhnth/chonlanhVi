@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'Bookerly';
+  src:
+    local('Bookerly'),
+    url('./Bookerly-Light.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+}

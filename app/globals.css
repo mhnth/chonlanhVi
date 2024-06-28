@@ -51,3 +51,7 @@ body {
 span {
   display: inline-block;
 }
+
+.bookerly {
+  font-family: 'Bookerly';
+}
