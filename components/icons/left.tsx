@@ -1,4 +1,4 @@
-export default function ILeft(props: React.ComponentProps<'svg'>) {
+export function ILeft(props: React.ComponentProps<'svg'>) {
   return (
     <svg
       width="20"

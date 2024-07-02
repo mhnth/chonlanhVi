@@ -2,7 +2,7 @@ import { controller } from '@/lib/FController';
 import { Tabs } from './tabs';
 import Link from 'next/link';
 
-export default async function Page({
+export default async function NovelPage({
   params,
   searchParams,
 }: {
@@ -32,7 +32,9 @@ export default async function Page({
             </div>
             <div className="text-sm">
               <span className="mr-2">Author:</span>
-              <span className="font-light text-gray-200">{`${novel.authorVi + ' / ' + novel.author}`}</span>
+              <span className="font-light text-gray-200">{`${
+                novel.authorVi + ' / ' + novel.author
+              }`}</span>
             </div>
             <div className="mt-3 flex gap-2 px-3">
               <span className="grow rounded-md bg-gray-700 py-2 text-center">

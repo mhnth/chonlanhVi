@@ -22,4 +22,17 @@ function cx(): string {
   return str;
 }
 
-export { cx };
+function formDataToObject<T>(formData: FormData) {
+  if (Array.from(formData.entries()).length === 0) {
+    return null;
+  }
+
+  return Array.from(formData.entries()).reduce((object, [key, value]) => {
+    return {
+      ...object,
+      [key]: value,
+    };
+  }, {}) as T;
+}
+
+export { cx, formDataToObject };

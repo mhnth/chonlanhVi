@@ -1,4 +1,4 @@
-export default function ISearch(props: React.ComponentProps<'svg'>) {
+export function ISearch(props: React.ComponentProps<'svg'>) {
   return (
     <svg
       width="24"

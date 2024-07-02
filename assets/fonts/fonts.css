@@ -2,7 +2,7 @@
   font-family: 'Bookerly';
   src:
     local('Bookerly'),
-    url('./Bookerly-Light.ttf') format('truetype');
+    url('./Bookerly-Regular.ttf') format('truetype');
   font-style: normal;
   font-weight: 400;
 }

@@ -1,9 +1,9 @@
 import { controller } from '@/lib/FController';
 import { NReader } from './n-reader';
-import { TransOption } from '@/lib/types';
 import { translate } from '@/lib/translate_api';
+import { TransOption } from '@/lib/constants';
 
-export default async function Home({
+export default async function ChapPage({
   params,
   searchParams,
 }: {
@@ -35,6 +35,7 @@ export default async function Home({
   return (
     <div className="mx-auto max-w-2xl">
       <NReader text={formattedText} />
+      <div className="my-8"></div>
     </div>
   );
 }

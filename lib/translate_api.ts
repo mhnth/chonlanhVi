@@ -1,4 +1,4 @@
-import { TransOption, languages_baidu, languages_google } from './types';
+import { TransOption, languages_baidu, languages_google } from './constants';
 
 async function translateBing(
   originalString: String,

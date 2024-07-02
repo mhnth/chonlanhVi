@@ -24,7 +24,7 @@ model tag {
 model novel {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   slug         String   @unique @default("slug")
-  cover        String   @default("cover")
+  cover        String   @default("https://images-ng.pixai.art/images/orig/4458d621-f38b-4aab-ab74-614728c2bfde")
   name         String   @default("nameCn")
   author       String   @default("authorCN")
   desc         String   @default("descCn")
@@ -36,4 +36,20 @@ model novel {
   chapTitlesVi String[] @default([])
   parts        Json?
   tags         String[] @default([])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model user {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  email    String
+  username String
+  password String
+  img      String @default("https://cdn.discordapp.com/attachments/1255712706426572881/1257558061036474458/05edf418-dd84-446d-9f71-ae2882647aa9.png?ex=6684d7b6&is=66838636&hm=fe3827e9784e8e0b8365b0c4098a7b084d9b12de0b6bad0e101a8f00ea326ef9&")
+  role     Role   @default(USER)
+
+  @@unique([email, username])
 }

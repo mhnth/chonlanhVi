@@ -17,10 +17,19 @@ body {
   /* font-family: 'Open Sans', sans-serif; */
   background: rgb(33, 33, 33);
 }
+span {
+  display: inline-block;
+}
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer components {
+  .auth-input {
+    @apply rounded-none border border-neutral-500 bg-transparent px-3 py-1 outline-none placeholder:font-thin;
   }
 }
 
@@ -30,26 +39,13 @@ body {
   @apply outline-none ring-0;
 }
 
-.material-symbols-outlined {
-  font-family: 'Material Icons';
-  height: 24px;
-  width: 24px;
-  overflow: hidden;
-  line-height: 24px;
-  display: block;
-  transform: translateY(2px);
-}
-
 .novel-info-bg {
-  background-image: url('../images/Noise-dark@3x.jpg');
+  background-image: url('../assets/images/Noise-dark@3x.jpg');
   background-size: 160px;
 }
 .novel-read-bg {
-  background-image: url('../images/theme_7_bg.png');
+  background-image: url('../assets/images/theme_7_bg.png');
   background-size: 50px;
-}
-span {
-  display: inline-block;
 }
 
 .bookerly {

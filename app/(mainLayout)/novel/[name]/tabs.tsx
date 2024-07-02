@@ -1,6 +1,6 @@
 'use client';
 
-import IUp from '@/components/icons/up';
+import { IUp } from '@/components/icons';
 import { cx } from '@/lib/utils';
 import { Prisma } from '@prisma/client';
 import Link from 'next/link';

@@ -1,6 +1,6 @@
 'use client';
 
-import ILeft from '@/components/icons/left';
+import { ILeft } from '@/components/icons';
 import { cx } from '@/lib/utils';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
@@ -29,7 +29,6 @@ export const ChapUtil: React.FC<ChapUtilProps> = ({}) => {
 
   const { name, chap } = params;
   const url = '/novel/' + name + '/' + chap;
-  console.log('url', url);
 
   const nextChapter =
     url.replace(chap as string, `${+chap + 1}`) + '?mt=' + trans_mode;
@@ -57,7 +56,7 @@ export const ChapUtil: React.FC<ChapUtilProps> = ({}) => {
               className={cx(
                 chap === '1' && 'pointer-events-none [&>svg>path]:opacity-50',
               )}
-              href={url.replace(chap as string, `${+chap - 1}`)}
+              href={preChapter}
             >
               <ILeft />
             </Link>
