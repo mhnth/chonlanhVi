@@ -1,4 +1,4 @@
-import { $Enums } from '@prisma/client';
+import { $Enums, Prisma, novel } from '@prisma/client';
 
 export type UserLogin = {
   email: string;
@@ -19,4 +19,20 @@ export type UserWithoutPassword = {
   username: string;
   img: string;
   role: $Enums.Role;
+};
+
+export type NovelUpload = {
+  slug: string;
+  cover: string;
+  name: string;
+  author: string;
+  desc: string;
+  chapTitles: string[];
+  nameVi: string;
+  authorVi: string;
+  descVi: string;
+  tagsVi: string[];
+  chapTitlesVi: string[];
+  parts: Prisma.JsonValue;
+  tags: number[];
 };

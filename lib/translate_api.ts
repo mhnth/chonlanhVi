@@ -155,6 +155,23 @@ async function translateGptChivi(originalString: string) {
   return data;
 }
 
+export async function translateTikTok(text_input: string) {
+  // Get the target translation language
+  // let translate_to = Cookies.get('translator_button');
+
+  const response = await fetch('https://tiktok-translation.nhimmeo.ovh/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: 'src_content=' + text_input + '&trg_lang=' + 'vi',
+  });
+
+  const data = await response.json();
+
+  return data.join('\n');
+}
+
 export async function translate(
   originalString: string,
   from: string = 'zh',
@@ -174,6 +191,8 @@ export async function translate(
       return translateSTV(originalString);
     case TransOption.GPT_CHIVI:
       return translateGptChivi(originalString);
+    case TransOption.TIKTOK:
+      return translateTikTok(originalString);
     default:
       throw new Error('Unsupported translation service');
   }

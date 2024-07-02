@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
     const { password, ...userWithoutPassword } = newUser;
 
-    const headers = createAuthHeaders(userWithoutPassword.id);
+    const headers = createAuthHeaders(userWithoutPassword);
 
     return NextResponse.json(
       { user: userWithoutPassword },

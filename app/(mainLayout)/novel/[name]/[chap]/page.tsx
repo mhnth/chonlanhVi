@@ -22,7 +22,9 @@ export default async function ChapPage({
           ? TransOption.Google
           : mt === 'bing'
             ? TransOption.Bing
-            : TransOption.Baidu;
+            : mt === 'tt'
+              ? TransOption.TIKTOK
+              : TransOption.Baidu;
 
   const text = await controller.getChap(name, +chap - 1);
 
@@ -35,7 +37,6 @@ export default async function ChapPage({
   return (
     <div className="mx-auto max-w-2xl">
       <NReader text={formattedText} />
-      <div className="my-8"></div>
     </div>
   );
 }

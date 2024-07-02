@@ -34,5 +34,11 @@ function formDataToObject<T>(formData: FormData) {
     };
   }, {}) as T;
 }
+export const truncateStr = (input: string, max: number): string => {
+  if (input.length > max) {
+    return `${input.substring(0, max)}...`;
+  }
+  return input;
+};
 
 export { cx, formDataToObject };

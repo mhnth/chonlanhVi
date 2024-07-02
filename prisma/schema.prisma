@@ -24,7 +24,8 @@ model tag {
 model novel {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   slug         String   @unique @default("slug")
-  cover        String   @default("https://images-ng.pixai.art/images/orig/4458d621-f38b-4aab-ab74-614728c2bfde")
+  point        String?
+  cover        String   @default("https://i.imgur.com/ZddDV5D.jpeg")
   name         String   @default("nameCn")
   author       String   @default("authorCN")
   desc         String   @default("descCn")
@@ -35,7 +36,7 @@ model novel {
   tagsVi       String[] @default([])
   chapTitlesVi String[] @default([])
   parts        Json?
-  tags         String[] @default([])
+  tags         Int[]    @default([])
 }
 
 enum Role {

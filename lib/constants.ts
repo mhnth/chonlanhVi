@@ -145,6 +145,7 @@ export enum TransOption {
   Gpt = 'gpt',
   STV = 'stv',
   GPT_CHIVI = 'gpt_chivi',
+  TIKTOK = 'tiktok',
 }
 
 export type TransOptions =

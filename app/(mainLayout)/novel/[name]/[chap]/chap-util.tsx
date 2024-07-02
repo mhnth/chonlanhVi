@@ -21,6 +21,10 @@ const trans_options = [
     label: 'STV',
     code: 'stv',
   },
+  {
+    label: 'Tiktok',
+    code: 'tt',
+  },
 ];
 
 export const ChapUtil: React.FC<ChapUtilProps> = ({}) => {
