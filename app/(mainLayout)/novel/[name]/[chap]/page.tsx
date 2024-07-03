@@ -3,6 +3,7 @@ import { NReader } from './n-reader';
 import { translate } from '@/lib/translate_api';
 import { TransOption } from '@/lib/constants';
 import { Metadata, ResolvingMetadata } from 'next';
+import prisma from '@/lib/prismadb';
 
 type Props = {
   params: { name: string; chap: string };
