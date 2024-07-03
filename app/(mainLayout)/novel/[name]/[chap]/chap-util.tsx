@@ -44,17 +44,29 @@ export const ChapUtil: React.FC<ChapUtilProps> = ({}) => {
   const [scrollingDown, setScrollingDown] = useState(false);
 
   useEffect(() => {
-    let previousScrollTop = 0;
+    // let previousScrollTop = 0;
+    let lastScrollTop = 0;
     const handleScroll = () => {
-      console.log('scroll');
-
+      // console.log('scroll');
+      // const { scrollTop } = document.documentElement;
+      // setScrollingDown(scrollTop > previousScrollTop);
+      // console.log('open', openSidebar);
+      // previousScrollTop = scrollTop;
       const { scrollTop } = document.documentElement;
+      const isScrollingUp = scrollTop < lastScrollTop;
+      const isScrollingDown = scrollTop > lastScrollTop;
 
-      setScrollingDown(scrollTop > previousScrollTop);
+      // Người dùng cuộn lên ít nhất 20px
+      if (isScrollingUp && scrollTop + 200 <= lastScrollTop) {
+        setScrollingDown(false);
+        lastScrollTop = scrollTop;
+      }
 
-      console.log('open', openSidebar);
-
-      previousScrollTop = scrollTop;
+      // Người dùng cuộn xuống ít nhất 20px
+      if (isScrollingDown && scrollTop - 200 >= lastScrollTop) {
+        setScrollingDown(true);
+        lastScrollTop = scrollTop;
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
