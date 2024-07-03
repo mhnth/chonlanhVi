@@ -84,7 +84,11 @@ export const ChapUtil: React.FC<ChapUtilProps> = ({}) => {
             setOpenSidebar(() => !openSidebar);
           }}
         >
-          <IBar />
+          <IBar
+            className={cx(
+              openSidebar ? '[&>path]:fill-blue-500' : '[&>path]:fill-white',
+            )}
+          />
         </Link>
         <div className="flex items-center gap-8">
           <div className="space-x-4">
