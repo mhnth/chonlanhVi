@@ -1,10 +1,11 @@
 'use client';
 
-import { ILeft } from '@/components/icons';
+import { IBar, ILeft } from '@/components/icons';
 import { cx } from '@/lib/utils';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { ChapterSidebar } from './chapter-sidebar';
 
 interface ChapUtilProps {}
 
@@ -30,6 +31,7 @@ const trans_options = [
 export const ChapUtil: React.FC<ChapUtilProps> = ({}) => {
   const params = useParams();
   const trans_mode = useSearchParams().get('mt');
+  const [openSidebar, setOpenSidebar] = useState(false);
 
   const { name, chap } = params;
   const url = '/novel/' + name + '/' + chap;
@@ -39,10 +41,51 @@ export const ChapUtil: React.FC<ChapUtilProps> = ({}) => {
   const preChapter =
     url.replace(chap as string, `${+chap - 1}`) + '?mt=' + trans_mode;
 
+  const [scrollingDown, setScrollingDown] = useState(false);
+
+  useEffect(() => {
+    let previousScrollTop = 0;
+    const handleScroll = () => {
+      console.log('scroll');
+
+      const { scrollTop } = document.documentElement;
+
+      setScrollingDown(scrollTop > previousScrollTop);
+
+      console.log('open', openSidebar);
+
+      previousScrollTop = scrollTop;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (scrollingDown) setOpenSidebar(() => false);
+  }, []);
+
   return (
-    <div className="fixed bottom-0 w-full bg-neutral-600 py-3">
+    <div
+      className={cx(
+        'fixed bottom-0 w-full bg-neutral-600 py-3',
+        scrollingDown && 'hidden',
+      )}
+    >
+      <ChapterSidebar
+        isOpen={openSidebar}
+        slug={name as string}
+        currentChap={chap as string}
+      />
       <div className="mx-auto flex max-w-3xl justify-between px-3">
-        <div>Chapters</div>
+        <Link
+          href={'#chapter' + chap}
+          onClick={() => {
+            setOpenSidebar(() => !openSidebar);
+          }}
+        >
+          <IBar />
+        </Link>
         <div className="flex items-center gap-8">
           <div className="space-x-4">
             {trans_options.map((t, i) => (

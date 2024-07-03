@@ -1,11 +1,13 @@
 'use client';
 
 import { createNovel } from '@/lib/actions';
-import { NovelUpload } from '@/lib/types';
+import { getTags } from '@/lib/queries';
+import { tag } from '@prisma/client';
 import Link from 'next/link';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 export default function UploadPage() {
+  const [tag, setTags] = useState<tag[] | null>(null);
   const [formState, setFormState] = useState({
     slug: '',
     point: '',
@@ -67,143 +69,173 @@ export default function UploadPage() {
     setLoading(false);
   };
 
+  const fetchTags = async () => {
+    const tag = await getTags();
+    console.log('tag', tag);
+
+    setTags(() => tag);
+  };
+
+  useEffect(() => {
+    fetchTags();
+  }, []);
+
   return (
-    <div>
-      <div className="mx-auto max-w-md p-6">
+    <div className="mx-auto flex flex-row-reverse items-center justify-center gap-6">
+      <div className="">
+        <span>tags</span>
+        <div className="grid grid-cols-3">
+          {tag &&
+            tag.map((t, i) => {
+              return (
+                <div key={i} className="text-gray-300">
+                  {t.code}: {t.nameVi}
+                </div>
+              );
+            })}
+        </div>
+      </div>
+      <div className="max-w-2xl p-6">
         <div className="flex justify-between">
           <h3 className="text-xl">Upload Book</h3>
           <Link href={'/admin'}>Back</Link>
         </div>
-        <form action="" onSubmit={handleSubmit}>
-          <label className="mt-3 flex flex-col gap-1">
-            Slug
-            <input
-              onChange={handleInputChange}
-              name="slug"
-              type="text"
-              className="auth-input"
-              placeholder="novel-name"
-              required
-            />
-          </label>
-          <label className="mt-3 flex flex-col gap-1">
-            Point
-            <input
-              onChange={handleInputChange}
-              name="point"
-              type="text"
-              className="auth-input"
-              placeholder="repo-name"
-              required
-            />
-          </label>
-          <label className="flex flex-col gap-1">
-            Cover
-            <input
-              onChange={handleInputChange}
-              name="cover"
-              type="text"
-              className="auth-input"
-              placeholder="pixai.art"
-            />
-          </label>
-          <label className="flex flex-col gap-1">
-            Name Vi
-            <input
-              onChange={handleInputChange}
-              name="nameVi"
-              type="text"
-              className="auth-input"
-              placeholder="name display"
-              required
-            />
-          </label>
-          <label className="flex flex-col gap-1">
-            Original Name
-            <input
-              onChange={handleInputChange}
-              name="name"
-              type="text"
-              className="auth-input"
-              placeholder="楓 かれん"
-            />
-          </label>{' '}
-          <label className="flex flex-col gap-1">
-            Author Vi
-            <input
-              onChange={handleInputChange}
-              name="authorVi"
-              type="text"
-              className="auth-input"
-              placeholder="author vi"
-            />
-          </label>{' '}
-          <label className="flex flex-col gap-1">
-            author
-            <input
-              onChange={handleInputChange}
-              name="author"
-              type="text"
-              className="auth-input"
-              placeholder="author"
-            />
-          </label>
-          <label className="flex flex-col gap-1">
-            Tags
-            <input
-              onChange={handleInputChange}
-              name="tags"
-              type="text"
-              className="auth-input"
-              placeholder="code, split by ,"
-            />
-          </label>
-          <label className="flex flex-col gap-1">
-            Desc Vi
-            <textarea
-              onChange={handleInputChange}
-              name="descVi"
-              className="auth-input"
-              placeholder="description display"
-            />
-          </label>
-          <label className="flex flex-col gap-1">
-            Desc
-            <textarea
-              onChange={handleInputChange}
-              name="desc"
-              className="auth-input"
-              placeholder="description"
-            />
-          </label>
-          <label className="flex flex-col gap-1">
-            Parts
-            <input
-              onChange={handleInputChange}
-              name="parts"
-              type="text"
-              className="auth-input"
-              placeholder="1, 10; 11, 20"
-            />
-          </label>
-          <label className="flex flex-col gap-1">
-            Chapter titles Vi
-            <textarea
-              onChange={handleInputChange}
-              name="chapTitlesVi"
-              className="auth-input"
-              placeholder="split by ,"
-            />
-          </label>
-          <label className="flex flex-col gap-1">
-            Chapter title
-            <textarea
-              onChange={handleInputChange}
-              name="chapTitles"
-              className="auth-input"
-              placeholder="split by ,"
-            />
-          </label>
+        <form action="" onSubmit={handleSubmit} className="">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="mt-3 flex flex-col gap-1">
+                Slug
+                <input
+                  onChange={handleInputChange}
+                  name="slug"
+                  type="text"
+                  className="auth-input"
+                  placeholder="novel-name"
+                  required
+                />
+              </label>
+              <label className="mt-3 flex flex-col gap-1">
+                Point
+                <input
+                  onChange={handleInputChange}
+                  name="point"
+                  type="text"
+                  className="auth-input"
+                  placeholder="repo-name"
+                  required
+                />
+              </label>
+              <label className="flex flex-col gap-1">
+                Cover
+                <input
+                  onChange={handleInputChange}
+                  name="cover"
+                  type="text"
+                  className="auth-input"
+                  placeholder="pixai.art"
+                />
+              </label>
+              <label className="flex flex-col gap-1">
+                Name Vi
+                <input
+                  onChange={handleInputChange}
+                  name="nameVi"
+                  type="text"
+                  className="auth-input"
+                  placeholder="name display"
+                  required
+                />
+              </label>
+              <label className="flex flex-col gap-1">
+                Original Name
+                <input
+                  onChange={handleInputChange}
+                  name="name"
+                  type="text"
+                  className="auth-input"
+                  placeholder="楓 かれん"
+                />
+              </label>{' '}
+              <label className="flex flex-col gap-1">
+                Author Vi
+                <input
+                  onChange={handleInputChange}
+                  name="authorVi"
+                  type="text"
+                  className="auth-input"
+                  placeholder="author vi"
+                />
+              </label>{' '}
+              <label className="flex flex-col gap-1">
+                author
+                <input
+                  onChange={handleInputChange}
+                  name="author"
+                  type="text"
+                  className="auth-input"
+                  placeholder="author"
+                />
+              </label>
+            </div>
+            <div>
+              <label className="flex flex-col gap-1">
+                Tags
+                <input
+                  onChange={handleInputChange}
+                  name="tags"
+                  type="text"
+                  className="auth-input"
+                  placeholder="code, split by ,"
+                />
+              </label>
+              <label className="flex flex-col gap-1">
+                Desc Vi
+                <textarea
+                  onChange={handleInputChange}
+                  name="descVi"
+                  className="auth-input"
+                  placeholder="description display"
+                />
+              </label>
+              <label className="flex flex-col gap-1">
+                Desc
+                <textarea
+                  onChange={handleInputChange}
+                  name="desc"
+                  className="auth-input"
+                  placeholder="description"
+                />
+              </label>
+              <label className="flex flex-col gap-1">
+                Parts
+                <input
+                  onChange={handleInputChange}
+                  name="parts"
+                  type="text"
+                  className="auth-input"
+                  placeholder="1, 10; 11, 20"
+                />
+              </label>
+              <label className="flex flex-col gap-1">
+                Chapter titles Vi
+                <textarea
+                  onChange={handleInputChange}
+                  name="chapTitlesVi"
+                  className="auth-input"
+                  placeholder="split by ,"
+                />
+              </label>
+              <label className="flex flex-col gap-1">
+                Chapter title
+                <textarea
+                  onChange={handleInputChange}
+                  name="chapTitles"
+                  className="auth-input"
+                  placeholder="split by ,"
+                />
+              </label>
+            </div>
+          </div>
           <button
             type="submit"
             className="mt-6 w-full rounded-md bg-neutral-700 py-2 text-center hover:bg-neutral-500"

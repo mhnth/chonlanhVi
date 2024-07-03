@@ -1,3 +1,4 @@
+import prisma from '@/lib/prismadb';
 export const getCurrentUser = async () => {
   const res = await fetch('/api/auth/verify', {
     method: 'POST',
@@ -10,4 +11,14 @@ export const getCurrentUser = async () => {
   const user = data.user;
 
   return user;
+};
+
+export const getTags = async () => {
+  const res = await fetch('/api/tag');
+
+  const data = await res.json();
+
+  console.log(data);
+
+  return data.tag;
 };

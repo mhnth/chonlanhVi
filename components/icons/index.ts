@@ -4,3 +4,4 @@ export * from './logo';
 export * from './menu';
 export * from './up';
 export * from './left';
+export * from './bar';

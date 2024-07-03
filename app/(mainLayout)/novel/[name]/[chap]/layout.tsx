@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import ReadClientLayout from './layout.client';
+import { ChapUtil } from './chap-util';
 
 export const metadata: Metadata = {
   title: 'Chồn Lanh',
@@ -11,5 +11,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <ReadClientLayout>{children}</ReadClientLayout>;
+  return (
+    <>
+      <main className="md:mt-3">{children}</main>
+      <ChapUtil />
+    </>
+  );
 }
