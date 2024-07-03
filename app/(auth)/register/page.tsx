@@ -1,19 +1,21 @@
-"use client";
+'use client';
 
-import Link from "next/link";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
+  const router = useRouter();
   const handleSubmit = async (formData: FormData) => {
-    console.log("form data", formData);
+    console.log('form data', formData);
 
-    const res = await fetch("api/auth/register", {
-      method: "POST",
+    const res = await fetch('api/auth/register', {
+      method: 'POST',
       body: formData,
     });
 
     const data = await res.json();
 
-    console.log("res", data);
+    if (!data.err) window.location.replace('/');
   };
   return (
     <div>
@@ -49,8 +51,8 @@ export default function Page() {
             Create Account
           </button>
           <div className="mt-4 text-center font-light text-gray-300">
-            or{" "}
-            <Link href={"/login"} className="font-normal text-blue-500">
+            or{' '}
+            <Link href={'/login'} className="font-normal text-blue-500">
               Login
             </Link>
           </div>

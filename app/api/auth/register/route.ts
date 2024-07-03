@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import prisma from '@/lib/prismadb';
 import { UserLogin } from '@/lib/types';
 import { createAuthHeaders } from '../../utils';
+import { revalidatePath } from 'next/cache';
 
 export async function POST(req: Request) {
   const formData = await req.formData();
@@ -30,6 +31,8 @@ export async function POST(req: Request) {
     const { password, ...userWithoutPassword } = newUser;
 
     const headers = createAuthHeaders(userWithoutPassword);
+
+    revalidatePath('/');
 
     return NextResponse.json(
       { user: userWithoutPassword },

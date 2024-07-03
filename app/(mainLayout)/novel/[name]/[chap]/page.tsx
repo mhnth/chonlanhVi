@@ -28,7 +28,7 @@ export default async function ChapPage({
 
   const text = await controller.getChap(name, +chap - 1);
 
-  const translatedText = await translate(text, 'zh', 'vi', transMode);
+  const translatedText = await translate(text, transMode);
 
   if (!translatedText) return <div>Err Translate</div>;
 
@@ -36,7 +36,7 @@ export default async function ChapPage({
 
   return (
     <div className="mx-auto max-w-2xl">
-      <NReader text={formattedText} />
+      <NReader translatedText={formattedText} />
     </div>
   );
 }

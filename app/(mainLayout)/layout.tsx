@@ -15,7 +15,7 @@ export default async function RootLayout({
 }>) {
   const cookieStore = cookies();
   const token = cookieStore.get('access_token');
-  const { valid, decoded } = await verifyToken(token?.value!);
+  const { valid, decoded } = verifyToken(token?.value!);
 
   return (
     <>

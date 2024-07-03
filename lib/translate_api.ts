@@ -1,4 +1,6 @@
+import { truncate } from 'fs';
 import { TransOption, languages_baidu, languages_google } from './constants';
+import { truncateStr } from './utils';
 
 async function translateBing(
   originalString: String,
@@ -80,26 +82,38 @@ export async function translateBaidu(
 ) {
   //@ts-ignore
   to = languages_baidu[languages_google[to]] || to;
-  let a = await fetch(
-    'https://cors.moldich.eu.org/?q=https://fanyi.baidu.com/ait/text/translate',
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        query: originalString,
-        from,
-        to,
-        reference: '',
-        corpusIds: [],
-        qcSettings: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
-        domain: 'common',
-      }),
-    },
-  );
-  let e = await a.text();
-  return getTranslatingJson(e.split('\n'))
-    .data.list.map((t: any) => t.dst)
-    .join('\n');
+
+  const translatedChunks = [];
+
+  const chunks = splitIntoChunks(originalString, 9999);
+
+  for (const chunk of chunks) {
+    let a = await fetch(
+      'https://cors.moldich.eu.org/?q=https://fanyi.baidu.com/ait/text/translate',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: chunk,
+          from,
+          to,
+          reference: '',
+          corpusIds: [],
+          qcSettings: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
+          domain: 'common',
+        }),
+      },
+    );
+    let e = await a.text();
+
+    translatedChunks.push(
+      getTranslatingJson(e.split('\n'))
+        .data.list.map((t: any) => t.dst)
+        .join('\n'),
+    );
+  }
+
+  return translatedChunks.join('\n');
 }
 
 function getTranslatingJson(t: string[]) {
@@ -174,9 +188,9 @@ export async function translateTikTok(text_input: string) {
 
 export async function translate(
   originalString: string,
+  option: TransOption,
   from: string = 'zh',
   to: string = 'vi',
-  option: TransOption,
 ): Promise<string | undefined> {
   switch (option) {
     case TransOption.Bing:
@@ -196,4 +210,24 @@ export async function translate(
     default:
       throw new Error('Unsupported translation service');
   }
+}
+
+function splitIntoChunks(input: string, max: number = 1000): string[] {
+  const chunks = [];
+  let start = 0;
+  while (start < input.length) {
+    let end = start + max;
+    if (end < input.length) {
+      // Tìm vị trí xuống dòng gần nhất trước max length
+      end = input.lastIndexOf('\n', end);
+      if (end === -1) {
+        end = start + max;
+      } else {
+        end++; // Xuống dòng nằm tại end position
+      }
+    }
+    chunks.push(input.substring(start, end));
+    start = end;
+  }
+  return chunks;
 }

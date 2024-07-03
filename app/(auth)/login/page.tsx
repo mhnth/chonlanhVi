@@ -19,7 +19,7 @@ export default function Page() {
     if (data.error) {
       setErrorMsg(data.error);
     } else {
-      router.push('/');
+      window.location.replace('/');
     }
   };
   return (
