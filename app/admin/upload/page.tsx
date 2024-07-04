@@ -71,7 +71,6 @@ export default function UploadPage() {
 
   const fetchTags = async () => {
     const tag = await getTags();
-    console.log('tag', tag);
 
     setTags(() => tag);
   };

@@ -31,7 +31,7 @@ export const ChapterSidebar: React.FC<Props> = ({
   return (
     <div
       className={cx(
-        'chapter-bar absolute bottom-full h-[calc(100vh-48px)] w-[300px] overflow-y-scroll bg-neutral-800 transition-all duration-500 ease-in-out',
+        'chapter-bar fixed top-0 h-[calc(100vh-48px)] w-[300px] overflow-y-scroll bg-neutral-800 transition-all duration-500 ease-in-out',
         !isOpen ? '-ml-[300px]' : '',
       )}
     >

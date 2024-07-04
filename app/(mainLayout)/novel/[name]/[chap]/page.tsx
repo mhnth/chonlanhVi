@@ -10,27 +10,29 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
+const getNovelInfo = async (slug: string) => {
+  return await prisma?.novel.findUnique({
+    where: { slug: slug },
+    select: {
+      nameVi: true,
+      cover: true,
+      slug: true,
+    },
+  });
+};
+
 export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const { name, chap } = params;
 
-  const novel = await prisma?.novel.findUnique({
-    where: { slug: name },
-    select: {
-      nameVi: true,
-      cover: true,
-    },
-  });
+  const novel = await getNovelInfo(name);
 
   return {
     title: novel?.nameVi,
     openGraph: {
-      images: [
-        novel?.cover ||
-          'https://media.discordapp.net/attachments/1255712706426572881/1257560285145993247/0398dc865b5d430b44ca220c29dad39a.png?ex=66858288&is=66843108&hm=282d94f81e3088fa7c973514353bb17ae59a92d132955723619c010e64257c38&=&format=webp&quality=lossless&width=466&height=466',
-      ],
+      images: [novel?.cover || ''],
     },
   };
 }
@@ -54,15 +56,22 @@ export default async function ChapPage({ params, searchParams }: Props) {
 
   const text = await controller.getChap(name, +chap - 1);
 
-  const translatedText = await translate(text, transMode);
+  const [translatedText, novel] = await Promise.all([
+    await translate(text.trim(), transMode),
+    await getNovelInfo(name),
+  ]);
 
   if (!translatedText) return <div>Err Translate</div>;
 
-  const formattedText = translatedText.replace(/\n/g, '<br>');
+  const formattedText = translatedText.replace(/\n/g, `<p/>`);
 
   return (
     <div className="mx-auto max-w-2xl">
-      <NReader translatedText={formattedText} />
+      <NReader
+        translatedText={formattedText}
+        title={novel!.nameVi}
+        slug={novel!.slug}
+      />
     </div>
   );
 }

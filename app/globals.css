@@ -67,3 +67,8 @@ span {
 .bookerly {
   font-family: 'Bookerly';
 }
+
+.break {
+  content: '';
+  margin-top: 14px;
+}

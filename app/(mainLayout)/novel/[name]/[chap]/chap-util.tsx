@@ -44,38 +44,27 @@ export const ChapUtil: React.FC<ChapUtilProps> = ({}) => {
   const [scrollingDown, setScrollingDown] = useState(false);
 
   useEffect(() => {
-    // let previousScrollTop = 0;
-    let lastScrollTop = 0;
+    let previousScrollTop = 0;
     const handleScroll = () => {
-      // console.log('scroll');
-      // const { scrollTop } = document.documentElement;
-      // setScrollingDown(scrollTop > previousScrollTop);
-      // console.log('open', openSidebar);
-      // previousScrollTop = scrollTop;
-      const { scrollTop } = document.documentElement;
-      const isScrollingUp = scrollTop < lastScrollTop;
-      const isScrollingDown = scrollTop > lastScrollTop;
+      const { scrollTop, scrollHeight, clientHeight } =
+        document.documentElement;
+      if (openSidebar) {
+        previousScrollTop = scrollTop;
+        return;
+      }
+      const isAtBottom = scrollTop >= scrollHeight - clientHeight;
 
-      // Người dùng cuộn lên ít nhất 20px
-      if (isScrollingUp && scrollTop + 200 <= lastScrollTop) {
+      if (isAtBottom) {
         setScrollingDown(false);
-        lastScrollTop = scrollTop;
+      } else {
+        setScrollingDown(scrollTop > previousScrollTop);
       }
-
-      // Người dùng cuộn xuống ít nhất 20px
-      if (isScrollingDown && scrollTop - 200 >= lastScrollTop) {
-        setScrollingDown(true);
-        lastScrollTop = scrollTop;
-      }
+      previousScrollTop = scrollTop;
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if (scrollingDown) setOpenSidebar(() => false);
-  }, []);
+  }, [openSidebar]);
 
   return (
     <div
@@ -102,6 +91,7 @@ export const ChapUtil: React.FC<ChapUtilProps> = ({}) => {
             )}
           />
         </Link>
+
         <div className="flex items-center gap-8">
           <div className="space-x-4">
             {trans_options.map((t, i) => (
@@ -114,6 +104,7 @@ export const ChapUtil: React.FC<ChapUtilProps> = ({}) => {
               </Link>
             ))}
           </div>
+
           <div className="flex gap-2">
             <Link
               className={cx(
